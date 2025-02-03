@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   customer journey mapping
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static 'css/indexstyle.css' %}"/>
+ </head>
+ <body>
+  <div class="min-h-screen">
+   <!-- Hero Section -->
+   <div class="hero">
+    <img alt="A majestic fantasy landscape with mountains, forests, and a castle in the distance under a dramatic sky" src="{% static 'images/theme.jpeg' %}">
+    <!-- Navigation -->
+    <nav class="absolute w-full p-6 z-50">
+     <div class="nav-container">
+      <div class="logo">
+       <svg class="text-purple-500" fill="none" height="32" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 12h4">
+        </path>
+        <path d="M8 10v4">
+        </path>
+        <path d="M15 13h.01">
+        </path>
+        <path d="M18 11h.01">
+        </path>
+        <rect height="12" rx="2" width="20" x="2" y="6">
+        </rect>
+       </svg>
+       <span class="logo-text">
+        WANNA PLAY QUIZ
+       </span>
+      </div>
+      <div class="nav-links">
+       <a href="{% url 'index' %}">
+        Home
+       </a>
+       <a href="{% url 'login' %}">
+        Login
+       </a>
+       <a href="{% url 'quiz' %}">
+        Quiz
+       </a>
+       <a href="scoreboard">
+        scoreboard
+       </a>
+       <a href="{% url 'insight' %}">
+        insight
+       </a>
+       <a href="{% url 'comres' %}">
+        community
+       </a>
+      </div>
+     </div>
+    </nav>
+    <!-- Hero Content -->
+    <div class="hero-content">
+     <div class="hero-text">
+      <h1>
+        CUSTOMER JOURNEY MAPPING
+      </h1>
+      <p>
+        Customer Journey Mapping (CJM) is a strategic tool that visualizes your customer's complete experience. From first contact to final interaction, understand every touchpoint of their journey.
+      </p>
+     <!-- <div class="hero-buttons">
+       <button class="primary-button pulse">
+        <svg class="w-5 h-5" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M14.5 17.5 3 6V3h3l11.5 11.5">
+         </path>
+         <path d="m13 19 6-6">
+         </path>
+         <path d="m16 16 4 4">
+         </path>
+         <path d="m19 21 2-2">
+         </path>
+        </svg>
+        Start Your Quest
+       </button>
+       <button class="secondary-button">
+        View Achievements
+       </button>
+      </div> -->
+     </div>
+    </div>
+   </div>
+   <!-- Features Section -->
+   <div class="features">
+    <h2>
+     ABOUT CUSTOMER JOURNEY MAPPING
+    </h2>
+    <div class="feature-cards">
+     <div class="feature-card">
+      <svg class="feature-icon pulse" fill="none" height="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+       </path>
+      </svg>
+      <h3>
+       definition
+      </h3>
+      <p>
+        A comprehensive visualization tool that outlines the complete journey from the customer's perspective, helping businesses understand and optimize every interaction.
+      </p>
+     </div>
+     <div class="feature-card">
+      <svg class="feature-icon pulse" fill="none" height="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+       <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14">
+       </path>
+      </svg>
+      <h3>
+       purpose
+      </h3>
+      <p>
+   
+        To enhance customer experience by identifying pain points, improving interactions, and aligning internal processes with customer needs.
+
+      </p>
+     </div>
+     <div class="feature-card">
+      <svg class="feature-icon pulse" fill="none" height="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+       </path>
+      </svg>
+      <h3>
+       benefits
+      </h3>
+      <p>
+        Enhanced Customer Experience: By identifying gaps in the journey, businesses can improve processes to make experiences more enjoyable and efficient.
+      </p>
+     </div>
+    </div>
+   </div>
+   <!-- Footer -->
+   <footer>
+    <p class="copyright">
+        © 2024 Customer Journey Mapping. All rights reserved.
+    </p>
+    <p class="team">
+     TEAM MEMBERS: Uvabalaji K, Thiyaneshwar B, Srivisnu S, Sujin Charles J
+    </p>
+   </footer>
+  </div>
+ </body>
+</html>
