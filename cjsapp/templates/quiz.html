@@ -7,6 +7,7 @@
     <title>Medieval Quiz</title>
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/quizstyle.css' %}"/>
+
 </head>
 <body>
     <div class="container">
@@ -33,9 +34,15 @@
         <div class="quiz-section" id="quizSection">
             <h2 id="quizTitle"></h2>
             <div id="quizContent"></div>
+            <div class="quiz-navigation">
+                <button id="prev-btn" style="display: none;">Previous</button>
+                <button id="next-btn" style="display: none;">Next</button>
+                <button id="submit-btn" style="display: none;">Submit</button>
+            </div>
         </div>
     </div>
 
     <script src="{% static 'js/quizscript.js' %}"></script>
+
 </body>
 </html>
