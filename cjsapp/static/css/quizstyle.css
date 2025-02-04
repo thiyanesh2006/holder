@@ -8,7 +8,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("logintheme.jpg");
+    background-image: url("static/images/logintheme.jpg");
     background-size: cover;
     background-position: center;
 }
