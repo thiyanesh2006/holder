@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Registration Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'css/registerstyle.css' %}"/>
+</head>
+<body>
+    <div class="hero">
+        <img alt="A man playing a game on a PC with a dark, futuristic gaming setup and neon lights" height="1080" src="{% static 'images/logintheme.jpg' %}" width="1920"/>
+        <div class="content">
+            <h1>Welcome to customer journey mapping</h1>
+            <p>Enter your username and password to enter the world of customer journey mapping</p>
+            <div class="login-container">
+                <h2>REGISTER</h2>
+                {% if messages %}
+                    {% for message in messages %}
+                        <p {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <form id="login-form" method="POST" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    <input id="username" placeholder="Username" name="username" type="text" required/>
+                    <input id="password" placeholder="Password" name="password" type="password" required/>
+                    <button id="login-button" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

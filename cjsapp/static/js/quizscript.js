@@ -54,7 +54,7 @@
     let currentQuestionIndex = 0;
     let selectedAnswers = [];
     
-    // Login Handler
+  /*  // Login Handler
     loginButton.addEventListener('click', () => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
@@ -66,7 +66,7 @@
         } else {
             errorElement.textContent = 'Invalid credentials. Please try again.';
         }
-    });
+    });*/
     
     // Mode Selection Handlers
     ['easy', 'medium', 'hard'].forEach(mode => {
@@ -93,7 +93,7 @@
         const questionDiv = document.createElement('div');
         questionDiv.classList.add('question');
         questionDiv.innerHTML = `
-            <p>${currentQuestionIndex + 1}. ${question.question}</p>
+            <p style="font-size: 20px; font-weight: bold; color:#f2d7d5;">${currentQuestionIndex + 1}. ${question.question}</p>
             <div class="options">
                 ${question.options.map((option, i) => `
                     <label>
