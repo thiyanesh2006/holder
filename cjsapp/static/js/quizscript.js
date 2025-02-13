@@ -1,4 +1,5 @@
     // DOM Elements
+    /*
     const quizData = {
         easy: [
             { question: "What is customer journey mapping?", options: ["A way to design marketing campaigns", "A visual representation of customer interactions with a business", "A method to track employee performance", "A financial strategy for startups"], answer: 1 },
@@ -69,6 +70,7 @@
     });*/
     
     // Mode Selection Handlers
+    /*
     ['easy', 'medium', 'hard'].forEach(mode => {
         document.getElementById(`${mode}ModeButton`).addEventListener('click', () => {
             currentMode = mode;
@@ -152,6 +154,222 @@
         alert(`You have completed your quiz with ${score} out of ${questions.length}. Congratulations!`);
     
         // Reset to mode selection
-        quizSection.style.display = 'none';
-        modeSection.style.display = 'block';
+     /* quizSection.style.display = 'none';
+        modeSection.style.display = 'block'; 
+    });*/
+
+
+     // Send score to the backend
+     /*
+     fetch('/quiz/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: new URLSearchParams({
+            'mode': currentMode,
+            'score': score
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Your score has been saved!');
+            window.location.href = '/scoreboard/';  // Redirect to scoreboard
+        } else {
+            alert('Error saving score. Try again.');
+        }
     });
+});
+
+// Function to Get CSRF Token
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}  
+*/
+
+
+
+
+
+
+
+
+// quizscript.js
+
+let currentMode = '';
+let currentQuestionIndex = 0;
+let questions = [];
+let userAnswers = [];
+
+// Quiz questions for different modes
+const quizData = {
+    easy: [
+        { question: "What is customer journey mapping?", options: ["A way to design marketing campaigns", "A visual representation of customer interactions with a business", "A method to track employee performance", "A financial strategy for startups"], answer: 1 },
+        { question: "Which of these is NOT a benefit of customer journey mapping?", options: ["Understanding customer pain points", "Reducing operational costs directly", "Enhancing customer experience", "Aligning team goals"], answer: 1 },
+        { question: "What are customer journey maps primarily used to identify?", options: ["Competitors' weaknesses", "Customer needs and pain points", "The best sales tactics", "Employee engagement levels"], answer: 1 },
+        { question: "What is a 'touchpoint' in the customer journey?", options: ["A customer’s review of a product", "A point where a customer interacts with a business", "The final step in making a purchase", "A social media post by the business"], answer: 1 },
+        { question: "Which stage of the customer journey typically comes first?", options: ["Retention", "Awareness", "Purchase", "Consideration"], answer: 1 },
+        { question: "How can startups collect data for customer journey mapping?", options: ["Conducting surveys and interviews", "Monitoring competitors' ads", "Buying customer databases", "Creating fictional personas without research"], answer: 0 },
+        { question: "Which of these is an example of a pain point?", options: ["Customer easily completes checkout", "Customer gets stuck during onboarding", "Customer receives a discount code", "Customer shares a positive review"], answer: 1 },
+        { question: "Why is it important for startups to use customer journey mapping?", options: ["To allocate resources effectively", "To hire more employees", "To raise product prices", "To replace team leaders"], answer: 0 },
+        { question: "What is the primary goal of optimizing the customer journey?", options: ["Increasing customer churn", "Improving customer satisfaction and loyalty", "Reducing touchpoints to a minimum", "Competing on price alone"], answer: 1 },
+        { question: "Which of these stages is part of a typical customer journey?", options: ["Discovery", "Onboarding", "Retention", "All of the above"], answer: 3 }
+    ],
+    medium: [
+        { question: "What is the primary purpose of identifying 'emotional states' in customer journey mapping?", options: ["To evaluate customer purchasing power", "To create ads that target emotions", "To understand how customers feel at each touchpoint", "To train employees in emotional intelligence"], answer: 2 },
+        { question: "Which of the following factors is most important when prioritizing touchpoints in a journey map?", options: ["The number of employees managing the touchpoint", "The potential impact on customer satisfaction", "The cost of maintaining the touchpoint", "The time it takes to implement changes"], answer: 1 },
+        { question: "What is the main challenge for startups in creating accurate customer journey maps?", options: ["Lack of creativity in designing maps", "Limited access to comprehensive customer data", "Difficulty in defining financial goals", "Over-reliance on internal feedback"], answer: 1 },
+        { question: "How can startups validate the insights gained from their customer journey map?", options: ["By comparing them with industry trends", "By testing with real customers and analyzing feedback", "By sharing the map with competitors for review", "By using it to predict sales without further testing"], answer: 1 },
+        { question: "Why is it important to map post-purchase stages in a customer journey?", options: ["To ensure repeat purchases and build customer loyalty", "To reduce marketing costs", "To identify competitors’ strategies", "To minimize the workload of customer support teams"], answer: 0 },
+        { question: "What is one key difference between a customer journey map and a sales funnel?", options: ["Journey maps focus only on pre-purchase behavior, while funnels include post-purchase", "Journey maps focus on customer emotions, while funnels track conversion rates", "Funnels are visual, while journey maps are text-based", "Funnels are created for marketing teams, while journey maps are for CEOs"], answer: 1 },
+        { question: "Which of the following is a proactive use of customer journey maps for startups?", options: ["Predicting potential roadblocks in customer onboarding", "Solving problems after customer complaints arise", "Tracking employee performance at touchpoints", "Increasing revenue by reducing product features"], answer: 0 },
+        { question: "What is the primary role of 'personas' in customer journey mapping?", options: ["To identify potential investors for the startup", "To represent the different types of customers interacting with the business", "To track team progress on customer satisfaction goals", "To document the startup's product roadmap"], answer: 1 },
+        { question: "How can startups measure the effectiveness of changes made using a journey map?", options: ["By tracking customer engagement metrics at key touchpoints", "By reducing the number of journey stages", "By increasing marketing budgets for each stage", "By focusing only on loyal customers"], answer: 0 },
+        { question: "What does a detailed 'consideration' stage in the journey map typically focus on?", options: ["Highlighting product reviews, comparisons, and decision-making support", "Ensuring the product delivery process is seamless", "Providing post-purchase customer service", "Building relationships with competitors"], answer: 0 }
+    ],
+        // Add more medium questions here
+        hard: [
+            { question: "Which of the following frameworks is most aligned with analyzing the customer’s decision-making journey in mapping?", options: ["The Eisenhower Matrix", "The AIDA model (Awareness, Interest, Desire, Action)", "The SWOT Analysis", "The Moore’s Law Framework"], answer: 1 },
+            { question: "When analyzing a customer journey, what is the most effective way to measure 'micro-moments'?", options: ["By identifying the points where customers make split-second decisions", "By mapping long-term brand loyalty trends", "By reviewing the average lifetime value (LTV) of a customer", "By tracking monthly recurring revenue (MRR)"], answer: 0 },
+            { question: "In a customer journey map, what does 'moment of truth' refer to?", options: ["A stage where customers interact with competitors", "A critical interaction that significantly influences the customer’s perception of a brand", "The final decision point before a purchase", "A post-purchase touchpoint that ensures loyalty"], answer: 1 },
+            { question: "What role do 'emotion curves' play in an advanced customer journey map?", options: ["They visually represent the customer's emotional state at each stage of the journey", "They map customer satisfaction levels against competitors", "They measure the effectiveness of marketing campaigns", "They represent product performance feedback"], answer: 0 },
+            { question: "What is the biggest challenge in integrating omnichannel touchpoints into a customer journey map?", options: ["Ensuring consistency in brand messaging across channels", "Managing customer feedback", "Reducing the number of digital interactions", "Eliminating physical interactions entirely"], answer: 0 },
+            { question: "How can startups incorporate predictive analytics into customer journey mapping?", options: ["By using historical data to forecast customer behavior at each stage", "By relying on manual customer feedback", "By prioritizing the highest revenue-generating customer segment", "By analyzing competitor journey maps"], answer: 0 },
+            { question: "Which of the following is a sign that a customer journey map lacks depth?", options: ["It focuses exclusively on one type of customer persona", "It includes touchpoints across multiple platforms", "It identifies pain points but excludes solutions", "It uses advanced data visualization tools"], answer: 2 },
+            { question: "In complex customer journeys, how do 'multi-touch attribution models' enhance journey mapping?", options: ["By identifying the primary touchpoint responsible for conversions", "By assigning value to multiple touchpoints that influence customer decisions", "By reducing the time spent on mapping post-purchase stages", "By focusing on the last interaction before a purchase"], answer: 1 },
+            { question: "How does incorporating real-time data enhance the effectiveness of a customer journey map?", options: ["It allows businesses to immediately adjust touchpoints based on current trends", "It eliminates the need for historical customer data", "It reduces the complexity of creating personas", "It focuses on qualitative insights rather than quantitative ones"], answer: 0 },
+            { question: "What distinguishes an 'experience-first' journey map from a traditional one?", options: ["It emphasizes customer emotions and memories over linear stages", "It excludes measurable business outcomes", "It focuses solely on digital touchpoints", "It prioritizes employee experiences over customer interactions"], answer: 0 }
+        ]
+};
+
+// Event listeners for mode selection buttons
+document.getElementById('easyModeButton').addEventListener('click', () => startQuiz('easy'));
+document.getElementById('mediumModeButton').addEventListener('click', () => startQuiz('medium'));
+document.getElementById('hardModeButton').addEventListener('click', () => startQuiz('hard'));
+
+// Function to start the quiz
+function startQuiz(mode) {
+    currentMode = mode;
+    questions = quizData[mode];
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestionIndex = 0;
+    document.getElementById('modeSection').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
+    document.getElementById('quizTitle').textContent = `${mode.charAt(0).toUpperCase() + mode.slice(1)} Mode Quiz`;
+    displayQuestion();
+    updateNavButtons();
+}
+
+// Function to display the current question
+function displayQuestion() {
+    const questionData = questions[currentQuestionIndex];
+    const quizContent = document.getElementById('quizContent');
+    quizContent.innerHTML = `
+        <h3>${questionData.question}</h3>
+        <div class="options">
+            ${questionData.options.map((option, index) => `
+                <label>
+                    <input type="radio" name="answer" value="${index}" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}>
+                    ${option}
+                </label>
+            `).join('')}
+        </div>
+    `;
+
+    // Add event listeners to radio buttons
+    const radioButtons = quizContent.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', () => {
+            userAnswers[currentQuestionIndex] = parseInt(radio.value);
+            updateNavButtons();
+        });
+    });
+}
+
+// Function to update navigation buttons
+function updateNavButtons() {
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+
+    prevBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+    nextBtn.style.display = currentQuestionIndex < questions.length - 1 ? 'inline-block' : 'none';
+    submitBtn.style.display = currentQuestionIndex === questions.length - 1 && userAnswers[currentQuestionIndex] !== null ? 'inline-block' : 'none';
+}
+
+// Event listeners for navigation buttons
+document.getElementById('prev-btn').addEventListener('click', () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        displayQuestion();
+        updateNavButtons();
+    }
+});
+
+document.getElementById('next-btn').addEventListener('click', () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        displayQuestion();
+        updateNavButtons();
+    }
+});
+
+document.getElementById('submit-btn').addEventListener('click', completeQuiz);
+
+// Function to complete the quiz
+function completeQuiz() {
+    const score = calculateScore();
+    const percentage = (score / questions.length) * 100;
+    alert(`Quiz completed! Your score: ${score}/${questions.length} (${percentage.toFixed(2)}%)`);
+    submitScore(currentMode, score);
+}
+
+// Function to calculate the score
+function calculateScore() {
+    return questions.reduce((score, question, index) => {
+        return score + (userAnswers[index] === question.correctAnswer ? 1 : 0);
+    }, 0);
+}
+
+// Function to submit the score
+function submitScore(mode, score) {
+    fetch('/quiz/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: `mode=${mode}&score=${score}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Score saved successfully!');
+            window.location.href = '/scoreboard/';  // Redirect to scoreboard
+        } else {
+            alert('Error saving score: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while saving the score.');
+    });
+}
+
+// Function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

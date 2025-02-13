@@ -62,10 +62,82 @@ def login_view(request):
 
     return render(request, 'login_quiz.html')
 
+ 
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.hashers import check_password
+from django.http import JsonResponse
+from .models import User, Score  # Import Score model
 
 def quiz_view(request):
+    if request.method == 'POST':
+        user_id = request.session.get('user_id')  # Get logged-in user ID
+        if not user_id:
+            return JsonResponse({'status': 'error', 'message': 'You need to log in first.'})
+
+        mode = request.POST.get('mode')  # Get quiz mode
+        score = int(request.POST.get('score'))  # Get quiz score
+
+        user = User.objects.get(id=user_id)
+
+        # Save score to database
+        Score.objects.create(user=user, mode=mode, score=score)
+
+        return JsonResponse({'status': 'success', 'message': 'Score saved successfully!'})
+
     return render(request, 'quiz.html')
+
+    
+'''
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.http import JsonResponse
+from .models import User, Score
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def quiz_view(request):
+    if request.method == 'POST':
+        user_id = request.session.get('user_id')
+        if not user_id:
+            return JsonResponse({'status': 'error', 'message': 'You need to log in first.'})
+
+        mode = request.POST.get('mode')
+        score = int(request.POST.get('score'))
+
+        try:
+            user = User.objects.get(id=user_id)
+            Score.objects.create(user=user, mode=mode, score=score)
+            return JsonResponse({'status': 'success', 'message': 'Score saved successfully!'})
+        except User.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'User not found.'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': f'Error saving score: {str(e)}'})
+
+    return render(request, 'quiz.html')
+    
+'''
+
+'''
+
+def scoreboard_view(request):
+    scores = Score.objects.all().order_by('-score')[:10]  # Get top 10 scores
+
+    return render(request, 'scoreboard.html', {'scores': scores})
+'''
+
+
+from django.shortcuts import render
+from .models import Score
+
+def scoreboard_view(request):
+    scores = Score.objects.select_related('user').order_by('-score')[:10]  # Get top 10 scores
+    return render(request, 'scoreboard.html', {'scores': scores})
+
+
+
+
 
 def insight_view(request):
     return render(request, 'insight.html')

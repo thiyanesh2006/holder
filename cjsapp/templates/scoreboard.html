@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="{% static 'css/scoreboardstyle.css' %}">
+</head>
+<body>
+    <h1>Quiz Scoreboard</h1>
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Mode</th>
+            <th>Score</th>
+        </tr>
+        {% for score in scores %}
+        <tr {% if forloop.counter <= 3 %} class="top-score" {% endif %}>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ score.user.username }}</td>
+            <td>{{ score.mode }}</td>
+            <td>{{ score.score }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

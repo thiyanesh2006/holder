@@ -9,6 +9,7 @@ urlpatterns = [
     path('index/',views.index, name='index'), #for include the index url
     path('login_quiz/',views.login_view, name='login_quiz'),
     path('quiz/',views.quiz_view, name='quiz'),
+    path('scoreboard/', views.scoreboard_view, name='scoreboard'),
     path('insight/',views.insight_view, name='insight'),
     path('comres/',views.community_resources, name='comres'),
 ]
