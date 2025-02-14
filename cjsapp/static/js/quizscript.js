@@ -261,7 +261,7 @@ function startQuiz(mode) {
     displayQuestion();
     updateNavButtons();
 }
-
+/*
 // Function to display the current question
 function displayQuestion() {
     const questionData = questions[currentQuestionIndex];
@@ -283,6 +283,35 @@ function displayQuestion() {
     radioButtons.forEach(radio => {
         radio.addEventListener('change', () => {
             userAnswers[currentQuestionIndex] = parseInt(radio.value);
+            updateNavButtons();
+        });
+    });
+}
+    */
+
+
+// Function to display the current question
+function displayQuestion() {
+    const questionData = questions[currentQuestionIndex];
+    const quizContent = document.getElementById('quizContent');
+    quizContent.innerHTML = `
+        <h3>${questionData.question}</h3>
+        <div class="options">
+            ${questionData.options.map((option, index) => `
+                <label>
+                    <input type="radio" name="answer" value="${index}" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}>
+                    ${option}
+                </label>
+            `).join('')}
+        </div>
+    `;
+
+    // Add event listeners to radio buttons
+    const radioButtons = quizContent.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', () => {
+            userAnswers[currentQuestionIndex] = parseInt(radio.value); // Update userAnswers
+            console.log(`Question ${currentQuestionIndex + 1}: Selected Answer = ${userAnswers[currentQuestionIndex]}`); // Debugging
             updateNavButtons();
         });
     });
@@ -318,6 +347,18 @@ document.getElementById('next-btn').addEventListener('click', () => {
 
 document.getElementById('submit-btn').addEventListener('click', completeQuiz);
 
+
+
+/*
+// Function to complete the quiz
+function completeQuiz() {
+    const score = calculateScore();
+    const percentage = (score / questions.length) * 100;
+    alert(`Quiz completed! Your score: ${score}/${questions.length} (${percentage.toFixed(2)}%)`);
+    submitScore(currentMode, score);
+}
+    */
+
 // Function to complete the quiz
 function completeQuiz() {
     const score = calculateScore();
@@ -326,12 +367,26 @@ function completeQuiz() {
     submitScore(currentMode, score);
 }
 
+
+/*
 // Function to calculate the score
 function calculateScore() {
     return questions.reduce((score, question, index) => {
         return score + (userAnswers[index] === question.correctAnswer ? 1 : 0);
     }, 0);
 }
+    */
+
+
+// Function to calculate the score
+function calculateScore() {
+    return questions.reduce((score, question, index) => {
+        const isCorrect = userAnswers[index] === question.answer;
+        console.log(`Question ${index + 1}: User Answer = ${userAnswers[index]}, Correct Answer = ${question.answer}, Correct? ${isCorrect}`); // Debugging
+        return score + (isCorrect ? 1 : 0);
+    }, 0);
+}
+
 
 // Function to submit the score
 function submitScore(mode, score) {
