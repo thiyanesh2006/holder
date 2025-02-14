@@ -1,4 +1,135 @@
+/*
 .top-score {
     font-weight: bold;
     background-color: gold;
+}
+*/
+
+body {
+    font-family: 'MedievalSharp', cursive;
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: column;
+}
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.hero img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+.content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 20px;
+}
+.content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #a855f7, #eab308);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 4px 4px 1px rgba(0, 0, 0, 0.5);
+}
+.content p {
+    font-size: 1.25rem;
+    color: #d1d5db;
+    margin-bottom: 2rem;
+}
+.login-container {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.login-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #eab308;
+}
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+}
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #9333ea;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.login-container button:hover {
+    background: #7e22ce;
+}
+.animated-input {
+    animation: shake 0.3s;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+}
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+th {
+    background: #9333ea;
+    color: white;
+}
+tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.1);
+}
+.top-score {
+    font-weight: bold;
+    background: rgba(234, 179, 8, 0.8);
 }
